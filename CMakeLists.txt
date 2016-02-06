@@ -8,12 +8,17 @@ include(ExternalProject)
 
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 ExternalProject_Add(gflags_src
-  GIT_REPOSITORY https://github.com/gflags/gflags
-  UPDATE_COMMAND ""
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
-  -DBUILD_SHARED_LIBS:BOOL=true
-  -DGFLAGS_NAMESPACE:STRING=google -DCMAKE_BUILD_TYPE:STRING=Release
-)
+   GIT_REPOSITORY https://github.com/gflags/gflags
+   UPDATE_COMMAND ""
+   CMAKE_ARGS 
+     -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
+     -DBUILD_SHARED_LIBS:BOOL=true
+     -DGFLAGS_NAMESPACE:STRING=google
+     -DCMAKE_BUILD_TYPE:STRING=Release
+   BUILD_COMMAND ${CMAKE_COMMAND} --build ./ --target install
+   INSTALL_COMMAND ""
+   )
+ExternalProject_CatkinInstall(gflags_src)
 
 
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
